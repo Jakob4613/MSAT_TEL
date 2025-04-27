@@ -25,6 +25,8 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+grafana/
+influxdb/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -54,6 +56,8 @@ cover/
 # Translations
 *.mo
 *.pot
+*.csv
+
 
 # Django stuff:
 *.log
