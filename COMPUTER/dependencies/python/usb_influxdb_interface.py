@@ -11,14 +11,17 @@ from utils import *
 from influxdb_client.client.write_api import SYNCHRONOUS
 
 
+# Speed calculation variables.
 ACCELEROMETER_SENSITIVITY = 16 #g
 GYROSCOPE_SENSITIVITY = 5 #TODO!
+RUNNING_AVG_SPD_COUNT = 4
 last_HAG = 0
 last_time = 0
+list_speeds = [0] * RUNNING_AVG_SPD_COUNT
 
 
 # Set up connection with the influxdb
-INFLUX_BUCKET = "teltest"
+INFLUX_BUCKET = "Telemetry"
 INFLUX_ORG = "Mulerius Satellites"
 INFLUX_TOKEN = "B0MalACawFHF2KPJHC5c-JA3c1Ywn5VfEH5J6KanLQb_4ShSPD2pNxRMIpadGwhX8HYexXthrEqdsqdE8rDWXg=="
 INFLUX_URL = "http://localhost:8086"
@@ -28,11 +31,13 @@ write_api = client.write_api(write_options=SYNCHRONOUS)
 START_TIMESTAMP = datetime.now().timestamp()
 output_path = str(int(START_TIMESTAMP)) + "_MSAT1.csv"
 
+
 # Set up connection with the serial feed.
 SER_BAUDRATE = 115200
 serial_connected = False
 
 
+# Greet the user and ask the COM port of the usbant.
 f = Figlet(font='slant')
 print(f.renderText('MSAT1 DATA', ))
 
@@ -71,8 +76,15 @@ while True:
 			# Read the json_line coming over the serial stream.
 			# Store this json line in a variable used for writing to influxdb later.
 			try:
+				# Load the received package.
 				data_timestamp = datetime.now().timestamp()
 				data = json.loads(received_line)
+
+				# Append usb-influxdb interface verbose information.
+				data["USB_DB_buffer"] = USB_DB_buffer
+				data["USB_DB_epochtime"] = data_timestamp
+
+				# Extract telemetry data
 				data["BVO"] = ((data["BVO"] * 3.3) / 255) * 11
 				data["CVO"] = ((data["CVO"] * 3.3) / 255) * 11
 				data["ACX"] = data["ACX"] / ACCELEROMETER_SENSITIVITY
@@ -85,11 +97,14 @@ while True:
 				data["APR"] = ((data["APR"] / 6) + 95000) / 100
 				data["TMP"] = data["TMP"] / 1
 				data["HAG"] = data["HAG"] / 120
-				data["SPD"] = ((data["HAG"] - last_HAG) / (data_timestamp - last_time)) * 3.6 # km/h
+				data["SPD"] = ((data["HAG"] - last_HAG) / (data_timestamp - last_time)) * 3.6
 
-				# append usb-influxdb interface verbose information.
-				data["USB_DB_buffer"] = USB_DB_buffer
-				data["USB_DB_epochtime"] = data_timestamp
+
+				# take running average for the speed, to make it less jittery.
+				for i in range(len(list_speeds)-1):
+					list_speeds[i] = list_speeds[i+1]
+				list_speeds[-1] = data["SPD"]
+				data["SPD_RAVG"] = mean(list_speeds)
 
 				# Keep track of the previous HAG and time for inferring the vertical speed.
 				last_HAG = data["HAG"]
@@ -106,6 +121,8 @@ while True:
 				print(error)
 				continue
 
+
+			# Try to write the Received telemetry package to the influxdb database.
 			try:
 				# Construct an influxdb point. Include measurement for each key and value.
 				point = influxdb_client.Point(INFLUX_MEASUREMENT)
@@ -119,6 +136,7 @@ while True:
 				print(str(USB_DB_epochtime) + " - ERROR: Could not write measurement to the InfluxDB backend.")
 				print(error)
 
+
 	# If any serial exception occurred, set the serial connected to false.
 	# This triggers the reconnection routine.
 	except Exception as error:
@@ -126,6 +144,8 @@ while True:
 		print(error)
 		serial_connected = False
 
+
+	# IF during the loop the q button is pressed by the user, exit and store the telemetry log.
 	if keyboard.is_pressed('q'):
 		export_telemetry(START_TIMESTAMP, output_path, INFLUX_BUCKET, INFLUX_ORG, INFLUX_TOKEN, INFLUX_URL, INFLUX_MEASUREMENT)
 
