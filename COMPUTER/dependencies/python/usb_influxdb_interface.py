@@ -7,14 +7,26 @@ from datetime import datetime
 import influxdb_client
 import json
 import time
+from statistics import mean
 from utils import *
 from influxdb_client.client.write_api import SYNCHRONOUS
 
 
+# calculation from sensitivity to units
+# gyro conversion units:
+# 250dps   500      1000  2000
+# 131,     65.5,    32.8,  16.4
+# accelerometer conversion units:
+#   2g    4g    8g   16g
+# 16384, 8192, 4096, 2048
+
+
 # Speed calculation variables.
-ACCELEROMETER_SENSITIVITY = 16 #g
-GYROSCOPE_SENSITIVITY = 5 #TODO!
+ACCELEROMETER_SENSITIVITY = 2048 
+GYROSCOPE_SENSITIVITY = 65.5
 RUNNING_AVG_SPD_COUNT = 4
+voltage_divider_R1 = 2400
+voltage_divider_R2 = 1000
 last_HAG = 0
 last_time = 0
 list_speeds = [0] * RUNNING_AVG_SPD_COUNT
@@ -85,8 +97,8 @@ while True:
 				data["USB_DB_epochtime"] = data_timestamp
 
 				# Extract telemetry data
-				data["BVO"] = ((data["BVO"] * 3.3) / 255) * 11
-				data["CVO"] = ((data["CVO"] * 3.3) / 255) * 11
+				data["BVO"] = (((((data["BVO"] * 257) / 65535) * 3.3) * (voltage_divider_R1 + voltage_divider_R2)) / voltage_divider_R2)
+				data["CVO"] = (((((data["CVO"] * 257) / 65535) * 3.3) * (voltage_divider_R1 + voltage_divider_R2)) / voltage_divider_R2)
 				data["ACX"] = data["ACX"] / ACCELEROMETER_SENSITIVITY
 				data["ACY"] = data["ACY"] / ACCELEROMETER_SENSITIVITY
 				data["ACZ"] = data["ACZ"] / ACCELEROMETER_SENSITIVITY
@@ -95,7 +107,7 @@ while True:
 				data["GYZ"] = data["GYZ"] / GYROSCOPE_SENSITIVITY
 				data["APM"] = ((data["APM"] / 6) + 95000) / 100
 				data["APR"] = ((data["APR"] / 6) + 95000) / 100
-				data["TMP"] = data["TMP"] / 1
+				data["TMP"] = data["TMP"] / 5
 				data["HAG"] = data["HAG"] / 120
 				data["SPD"] = ((data["HAG"] - last_HAG) / (data_timestamp - last_time)) * 3.6
 
