@@ -132,11 +132,11 @@ int main(void)
     }
     
     if(retrieve_partid_NRF24L01() == 14){
-        RTL_var = true;
+        RTL_var = false;
 //        printf("SUCCESS: NRF24 has been detected.\r\n");
     }
     else{
-        RTL_var = false;
+        RTL_var = true;
 //        printf("ERROR: NRF24 has not been detected.\r\n");
 //UART        activate_buzzer(true);
 //UART        __delay_ms(500);
