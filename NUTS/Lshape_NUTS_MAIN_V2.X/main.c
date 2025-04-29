@@ -11,30 +11,10 @@
 #include "NRF24L01.h"
 
 
-
 #define LIFT_THRESHOLD 20 // If the satellite surpasses this value, the sat is able to go into DRP1
 #define DRP1_THRESHOLD 110 //If the satellite drops below this value, the burnwire is capable of triggering
 #define BWA_THRESHOLD 90 // If the satellite surpasses this value, the burnwire is activated
 #define TDW_THRESHOLD 10 // If the satellite surpasses this value, the sat goes into touchdown-mode
-
-#define TEMPERATURE 288.15             // K (constant in isothermal assumption)
-#define GAS_CONSTANT 8.3144598         // J/(mol·K)
-#define GRAVITY 9.80665                // m/s^2
-#define MOLAR_MASS 0.0289644           // kg/mol
-
-
-
-double pressure_to_altitude(double pressure, double ref_pressure) {
-    if(pressure >= ref_pressure){
-        return 0;
-    }
-    else{
-        double factor = (GAS_CONSTANT * TEMPERATURE) / (MOLAR_MASS * GRAVITY);
-        double altitude = -factor * log(pressure / ref_pressure);
-        return altitude;
-    }
-}
-
 
 struct {
     uint8_t COO_L: 8;
@@ -64,7 +44,7 @@ struct {
     uint8_t HAG_H: 8;
     uint8_t APR_L: 8;
     uint8_t APR_H: 8;
-    bool RBW: 1;
+    bool RTL: 1;
     bool RBR: 1;
     bool RAC: 1;
     bool RGS: 1;
@@ -91,11 +71,12 @@ uint16_t BVO_var; // 16b -> 8b                                                  
 uint16_t CVO_var; // 16b -> 8b                                                                      XXXXX
 uint16_t SPD_var; // 16b -> 9b      ALWAYS ABLE TO LEAVE OUT IF NOT REQUIRED!
 uint8_t NST_var = 0; // 8b -> 4b Variable is only sent in a 4-byte length. 4 bits to be discarded       XXXXX
-uint16_t UPT_var; // 16b -> 13b                                                                     XXXXX
+uint24_t UPT_var; // 16b -> 13b                                                                     XXXXX
+uint16_t UPT_tel;
 bool RGS_var; // 1b -> 1b                                                                           XXXXX
 bool RAC_var; // 1b -> 1b                                                                           XXXXX
 bool RBR_var; // 1b -> 1b
-bool RBW_var; // 1b -> 1b
+bool RTL_var; // 1b -> 1b
 double HAG_var; // 16b -> 14b only 14 bits to be sent. 2 bits to be discarded.
 uint16_t HAG_tel;
 float APR_var; // 32b -> 14b                                                                     XXXXX
@@ -114,21 +95,25 @@ int main(void)
     
     __delay_ms(1000);
     
-    //TODo: check if there is a more intuitive way of showing that devices are not found.
+
     // Check wether the part-ids align with the expected value!
     if(retrieve_partid_ENS160() == 352){
 //        printf("SUCCESS: Gas sensor shows valid device id.\r\n");
+        RGS_var = false;
     }
     else{
+        RGS_var = true;
 //        printf("ERROR: Gas sensor shows an invalid device id.\r\n");
 //UART        activate_buzzer(true);
 //UART        __delay_ms(500);
 //UART        activate_buzzer(false);
     }
     if(retrieve_partid_ICM20984() == 234){
+        RAC_var = false;
 //        printf("SUCCESS: Accelerometer shows valid device id.\r\n");
     }
     else{
+        RAC_var = true;
 //        printf("ERROR: Accelerometer shows an invalid device id.\r\n");
 //UART        activate_buzzer(true);
 //UART        __delay_ms(500);
@@ -136,8 +121,10 @@ int main(void)
     }
     if(retrieve_partid_ICP10111() == 8){
 //        printf("SUCCESS: Barometer shows valid device id.\r\n");
+        RBR_var = false;
     }
     else{
+        RBR_var = true;
 //        printf("ERROR: Accelerometer shows an invalid device id.\r\n");
 //UART        activate_buzzer(true);
 //UART        __delay_ms(500);
@@ -145,9 +132,11 @@ int main(void)
     }
     
     if(retrieve_partid_NRF24L01() == 14){
+        RTL_var = true;
 //        printf("SUCCESS: NRF24 has been detected.\r\n");
     }
     else{
+        RTL_var = false;
 //        printf("ERROR: NRF24 has not been detected.\r\n");
 //UART        activate_buzzer(true);
 //UART        __delay_ms(500);
@@ -165,6 +154,8 @@ int main(void)
     bool firstCheck = CFG_IN_GetValue();
     __delay_ms(50);
     if(CFG_IN_GetValue() == 0 && firstCheck == 0){
+        activate_ICP10111();
+        __delay_ms(100);
         retrieve_data_ICP10111(ICP_A, ICP_B, ICP_C, ICP_D, &TMP_var, &APM_var);
         set_reference_pressure(APM_var);
         APR_var = APM_var;
@@ -188,21 +179,21 @@ int main(void)
 //UART        activate_buzzer(false);
     }
     
-
-    
-    
+    activate_ICP10111();
+    __delay_ms(100);
+        
     while(1){
         // 1. Retrieve the latest sensor-values. 
         // Write the accelerometer/gyroscope registers to the assigned variables. 
         // RAC stores whether an error occurred when reading the registers.
-        RAC_var = retrieve_data_ICM20948(&ACX_var, &ACY_var, &ACZ_var, &GYX_var, &GYY_var, &GYZ_var);
+        retrieve_data_ICM20948(&ACX_var, &ACY_var, &ACZ_var, &GYX_var, &GYY_var, &GYZ_var);
         
         // Write the gas sensor register to the assigned variables.
         // RGS holds the gas sensor error indicated.
-        RGS_var = retrieve_CO2_ENS160(&COO_var);
+        retrieve_CO2_ENS160(&COO_var);
         
-        RBR_var = retrieve_data_ICP10111(ICP_A, ICP_B, ICP_C, ICP_D, &TMP_var, &APM_var);
-        
+        retrieve_data_ICP10111(ICP_A, ICP_B, ICP_C, ICP_D, &TMP_var, &APM_var);
+        activate_ICP10111();
         // Every state cycle, increase the uptime variable.
         UPT_var = UPT_var + 1;
                 
@@ -258,7 +249,7 @@ int main(void)
             case 3:
                 // If the proper condition is met: proceed to the next state.
                 // In this case check if BWA is properly activated.!
-                if (HAG_var < TDW_THRESHOLD){         //TODO: write proper proceeding check
+                if (HAG_var < TDW_THRESHOLD){
                     NST_var = 4;
                     set_global_state(NST_var);
                 }
@@ -323,8 +314,9 @@ int main(void)
         telemetry_package.SPD_H = (SPD_var >> 8) & 0xFF;;
         telemetry_package.SPD_L = SPD_var & 0xFF;
 
-        telemetry_package.UPT_H = (UPT_var >> 8) & 0xFF;;
-        telemetry_package.UPT_L = UPT_var & 0xFF;
+        UPT_tel = UPT_var / 10;
+        telemetry_package.UPT_H = (UPT_tel >> 8) & 0xFF;;
+        telemetry_package.UPT_L = UPT_tel & 0xFF;
         
         if(HAG_var < 0){
             HAG_tel = 0;
@@ -341,7 +333,7 @@ int main(void)
         telemetry_package.APR_H = (APR_tel >> 8) & 0xFF;;
         telemetry_package.APR_L = APR_tel & 0xFF;
         
-        telemetry_package.RBW = RBW_var;
+        telemetry_package.RTL = RTL_var;
         
         telemetry_package.RBR = RBR_var;
         

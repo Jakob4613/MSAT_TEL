@@ -21,7 +21,7 @@ struct TelemetryPackage {
   unsigned int UPT:16;
   unsigned int HAG:16;
   unsigned int APR:16;
-  unsigned int RBW:1;
+  unsigned int RTL:1;
   unsigned int RBR:1;
   unsigned int RAC:1;
   unsigned int RGS:1;
@@ -67,8 +67,8 @@ void printTelemetry(const TelemetryPackage& telemetryData) {
   Serial.print(telemetryData.BVO);
   Serial.print(",\"CVO\":");
   Serial.print(telemetryData.CVO);
-  Serial.print(",\"RBW\":");
-  Serial.print(telemetryData.RBW);
+  Serial.print(",\"RTL\":");
+  Serial.print(telemetryData.RTL);
   Serial.print(",\"RBR\":");
   Serial.print(telemetryData.RBR);
   Serial.print(",\"RAC\":");
@@ -105,7 +105,7 @@ void setup() {
   //radio.disableCRC();
   radio.setPayloadSize(32);
   radio.setAutoAck(false);
-  radio.setAddressWidth(5);
+  radio.setAddressWidth(3);
   radio.setChannel(0x05);
   radio.openReadingPipe(1, Address);        /* Sets the address of receiver from which program will receive the data*/
   radio.startListening();			              /*Setting modem in Receiver mode*/

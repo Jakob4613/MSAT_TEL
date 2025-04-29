@@ -29,7 +29,6 @@ voltage_divider_R1 = 2400
 voltage_divider_R2 = 1000
 last_HAG = 0
 last_time = 0
-list_speeds = [0] * RUNNING_AVG_SPD_COUNT
 
 
 # Set up connection with the influxdb
@@ -110,13 +109,14 @@ while True:
 				data["TMP"] = data["TMP"] / 5
 				data["HAG"] = data["HAG"] / 120
 				data["SPD"] = ((data["HAG"] - last_HAG) / (data_timestamp - last_time)) * 3.6
+				data["UPT"] = data["UPT"] * 10
 
 
 				# take running average for the speed, to make it less jittery.
-				for i in range(len(list_speeds)-1):
-					list_speeds[i] = list_speeds[i+1]
-				list_speeds[-1] = data["SPD"]
-				data["SPD_RAVG"] = mean(list_speeds)
+#				for i in range(len(list_speeds)-1):
+#					list_speeds[i] = list_speeds[i+1]
+#				list_speeds[-1] = data["SPD"]
+#				data["SPD_RAVG"] = mean(list_speeds)
 
 				# Keep track of the previous HAG and time for inferring the vertical speed.
 				last_HAG = data["HAG"]

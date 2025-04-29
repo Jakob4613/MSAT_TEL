@@ -47,7 +47,7 @@ uint16_t read_IIC_byte(uint16_t slave_address, uint16_t register_address, size_t
     // Define the register address and the data array
     uint8_t TxData[1] = {(uint8_t)register_address};  // Register address to read from
     
-    uint8_t RxData[2];// = malloc(amount_of_bytes * sizeof(uint8_t));           // Array to store the received data
+    uint8_t RxData[2];
 
     if(I2C1_Write(slave_address, &TxData[0], 1)){                                                                                   
         while (I2C1_Host.IsBusy())
@@ -107,7 +107,6 @@ uint16_t read_IIC_byte(uint16_t slave_address, uint16_t register_address, size_t
     else {
         return 0;
     }
-    //free(RxData); TODO: CHECK THIS FUNCTION FROM FRONT TO BACK!!!!!
 }
 
 

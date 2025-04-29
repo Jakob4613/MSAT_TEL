@@ -18,6 +18,21 @@
 #define FLUSH_TX_CMD 0b11100001
 
 
+#define CONFIG_RF_SETUP 0b00100111 // 0dbm, 250kps
+//#define CONFIG_RF_SETUP 0b00100101; // -6dbm, 250kps
+//#define CONFIG_RF_SETUP 0b00100011; // -12dbm, 250kps
+//#define CONFIG_RF_SETUP 0b00100001; // -18dbm, 250kps
+
+#define CONFIG_CONFIG 0b00001010    //set the CONFIG byte such that no interrupts are triggerd, CRC isenabled and set to 1 byte
+                                    // additionally set power up and to PTX.
+#define CONFIG_FEATURE 0b00000001   //Turn on the W_TX_PAYLOAD_NOACK command!
+#define CONFIG_ENAA 0x00            // Disable the auto acknowledgement on all pipes.
+#define CONFIG_CH_REG 0x05          // The frequency is determined by F0 = 2400 + CH_REG [Mhz].
+//#define CONFIG_SETUPAW 0b00000011   // 5 bit channel width
+#define CONFIG_SETUPAW 0b00000001   // 3 bit channel width
+#define CONFIG_RETR_REG 0x00        // disable auto-retransmit
+
+
 /**
  * Read a single register from the NRF chip.
  * @param registerAddress The register that you want to read
@@ -81,41 +96,33 @@ void sendW_TX_PAYLOAD_NOACK(uint8_t* txPayloadData, size_t dataSize){
 
 /**
  * Initialize the NRF24 with the preconfigured settings encoded in this function.
- * TODO: implement potentially better configurability from the top of this file.
  * @return 
  */
 bool initialize_NRF24L01(void){
         
     bool success = true;
-    //Set up the rf speed and power. 250kbps and 0dBm.
-    //uint8_t rf_setup_value = 0b00100111;
-    uint8_t rf_setup_value = 0b00100001; // least output power (short range only)
+    uint8_t rf_setup_value = CONFIG_RF_SETUP;
     write_register_NRF(RF_SETUP_REG, &rf_setup_value, 1);
     if(!(read_register_NRF(RF_SETUP_REG) == rf_setup_value)){
         success = false;
     }
      
-    //set the CONFIG byte such that no interrupts are triggerd, CRC isenabled and set to 1 byte
-    // additionally set power up and to PTX.
-    uint8_t config_value = 0b00001010;
-    //uint8_t config_value = 0b00001010; // disable CRC
+    
+    uint8_t config_value = CONFIG_CONFIG;
     write_register_NRF(CONFIG_REG, &config_value, 1);
     
     if(!(read_register_NRF(CONFIG_REG) == config_value)){
         success = false;
     }
     
-    
-    //Turn on the W_TX_PAYLOAD_NOACK command!
-    uint8_t feature_value = 0b00000001;
+    uint8_t feature_value = CONFIG_FEATURE;
     write_register_NRF(FEATURE_REG, &feature_value, 1);
     
     if(!(read_register_NRF(FEATURE_REG) == feature_value)){
         success = false;
     }    
     
-            //---------------------------------------//Disable the auto acknowledgement on all pipes. -> messes up reception.
-    uint8_t enaa_value = 0x00;
+    uint8_t enaa_value = CONFIG_ENAA;
     write_register_NRF(EN_AA_REG, &enaa_value, 1);
     
     if(!(read_register_NRF(EN_AA_REG) == enaa_value)){
@@ -123,8 +130,7 @@ bool initialize_NRF24L01(void){
     }      
     
     // Set the channel of the RF comms
-    uint8_t rf_ch_reg_value = 0x05;
-    // The frequency is determined by F0 = 2400 + RF_CH [Mhz].
+    uint8_t rf_ch_reg_value = CONFIG_CH_REG;
     write_register_NRF(RF_CH_REG, &rf_ch_reg_value, 1);
     
     if(!(read_register_NRF(RF_CH_REG) == rf_ch_reg_value)){
@@ -132,10 +138,7 @@ bool initialize_NRF24L01(void){
     }
     
     
-    //TODO: Potentially implement changes to defaultt address. for further distinguishment.
-    // Set up the address width to 3-bytes.
-    //uint8_t setupaw_value = 0b00000001;
-    uint8_t setupaw_value = 0b00000011; // address width to 5-bytes
+    uint8_t setupaw_value = CONFIG_SETUPAW;
     write_register_NRF(SETUP_AW_REG, &setupaw_value, 1);
     
     if(!(read_register_NRF(SETUP_AW_REG) == setupaw_value)){
@@ -143,8 +146,7 @@ bool initialize_NRF24L01(void){
     }
     
     
-    // disable auto-retransmit
-    uint8_t setup_retr_value = 0x00;
+    uint8_t setup_retr_value = CONFIG_RETR_REG;
     write_register_NRF(SETUP_RETR_REG, &setup_retr_value, 1);
     
     if(!(read_register_NRF(SETUP_RETR_REG) == setup_retr_value)){
@@ -160,7 +162,6 @@ bool initialize_NRF24L01(void){
  * Function for checking whether the RF 24 sends responds to the MOSI line.
  * Should return 14 if everything is connected as it should.
  * @return value of the status register.
- * TODO: this check only holds up upon bootup.
  */
 uint8_t retrieve_partid_NRF24L01(void) {
     uint8_t status;

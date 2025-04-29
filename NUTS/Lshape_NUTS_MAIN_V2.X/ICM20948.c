@@ -61,10 +61,11 @@ bool initialize_ICM20948(void){
         return false;
     }
     
-    // Set the sensitivities, gyro set to +-2000 dps. ACcelerometer set to +- 16g.
-    if (!write_IIC_byte(ICM20984_ADDRESS, GYRO_CONFIG_1_REG, 0x07)){
+    // Set the sensitivities, gyro set to +-500 dps. 
+    if (!write_IIC_byte(ICM20984_ADDRESS, GYRO_CONFIG_1_REG, 0b00000011)){
         return false;
     }
+    //ACcelerometer set to +- 16g.
     if (!write_IIC_byte(ICM20984_ADDRESS, ACCEL_CONFIG_REG, 0x07)){
         return false;
     }
@@ -79,7 +80,6 @@ bool initialize_ICM20948(void){
 }
 
 /**
- * TODO TODO TODO -> check for potential errors.
  * @return 
  */
 bool retrieve_data_ICM20948(int16_t *acx, int16_t *acy, int16_t *acz, int16_t *gyx, int16_t *gyy, int16_t *gyz){
@@ -98,7 +98,6 @@ bool retrieve_data_ICM20948(int16_t *acx, int16_t *acy, int16_t *acz, int16_t *g
 
 /**
  * Retrieve any errors possibly detectable by the ICM20948.
- * LARGE TODO!
  * @return boolean indicating whether an error was found. true = error, false = fine.
  */
 bool retrieve_ERR_ICM20948(void){
