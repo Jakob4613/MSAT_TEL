@@ -93,10 +93,10 @@ void UART1_Initialize(void)
     U1CON1 = 0x80;
     //FLO off; TXPOL not inverted; C0EN Add all TX and RX characters; STP Transmit 1Stop bit, receiver verifies first Stop bit; RXPOL not inverted; RUNOVF RX input shifter stops all activity; 
     U1CON2 = 0x8;
-    //BRGL 64; 
-    U1BRGL = 0x40;
-    //BRGH 3; 
-    U1BRGH = 0x3;
+    //BRGL 207; 
+    U1BRGL = 0xCF;
+    //BRGH 0; 
+    U1BRGH = 0x0;
     //TXBE empty; STPMD in middle of first Stop bit; TXWRE No error; 
     U1FIFO = 0x2E;
     //ABDIE disabled; ABDIF Auto-baud not enabled or not complete; WUIF WUE not enabled by software; 

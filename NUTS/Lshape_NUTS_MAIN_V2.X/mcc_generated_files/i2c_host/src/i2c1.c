@@ -87,8 +87,8 @@ void I2C1_Initialize(void)
     /* Count register */
     I2C1CNTL = 0x0;
     I2C1CNTH = 0x0;
-    /* BAUD 127;  */
-    I2C1BAUD = 0x7F;
+    /* BAUD 31;  */
+    I2C1BAUD = 0x1F;
     /* BTOC Reserved;  */
     I2C1BTOC = 0x0;
 
