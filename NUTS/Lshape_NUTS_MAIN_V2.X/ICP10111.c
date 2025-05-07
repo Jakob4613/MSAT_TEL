@@ -14,7 +14,7 @@
 #define ULTRA_LOW_NOISE_TP 0x7866
 #define READ_ID_CMD 0xEFC8
 
-#define SELECTED_MODE 0x609C
+#define SELECTED_MODE 0x70DF
 
 #define TEMPERATURE 288.15             // K (constant in isothermal assumption)
 #define GAS_CONSTANT 8.3144598         // J/(mol·K)

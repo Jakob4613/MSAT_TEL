@@ -42,6 +42,7 @@ void SYSTEM_Initialize(void)
     PIN_MANAGER_Initialize();
     I2C1_Host_Initialize();
     SPI1_Initialize();
+    TMR2_Initialize();
     MVIO_Initialize();
     NVM_Initialize();
     UART1_Initialize();

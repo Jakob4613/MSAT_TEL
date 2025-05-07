@@ -48,6 +48,7 @@
 #include "../system/clock.h"
 #include "../i2c_host/i2c1.h"
 #include "../spi/spi1.h"
+#include "../timer/tmr2.h"
 
 /**
  * @ingroup systemdriver

@@ -10,7 +10,7 @@
 #include "EEPROM_ACCESS.h"
 #include "NRF24L01.h"
 
-
+// DONT FORGET TO SET THE BARO_TIMER TO THE PROPER AMOUNT OF TIME!
 #define LIFT_THRESHOLD 20 // If the satellite surpasses this value, the sat is able to go into DRP1
 #define DRP1_THRESHOLD 110 //If the satellite drops below this value, the burnwire is capable of triggering
 #define BWA_THRESHOLD 90 // If the satellite surpasses this value, the burnwire is activated
@@ -94,6 +94,12 @@ int main(void)
     initialize_iopins();
     
     __delay_ms(1000);
+    
+    
+//    T2CONbits.TMR2ON = 1;
+//    while(true){
+//        printf("%d", T2CONbits.TMR2ON);
+//    }
     
 
     // Check wether the part-ids align with the expected value!
@@ -180,6 +186,7 @@ int main(void)
     }
     
     activate_ICP10111();
+    T2CONbits.TMR2ON = 1;
     __delay_ms(100);
         
     while(1){
@@ -192,8 +199,16 @@ int main(void)
         // RGS holds the gas sensor error indicated.
         retrieve_CO2_ENS160(&COO_var);
         
-        retrieve_data_ICP10111(ICP_A, ICP_B, ICP_C, ICP_D, &TMP_var, &APM_var);
-        activate_ICP10111();
+        
+        //Check if the correct amount of time has elapsed prior to retrieving the new baro reading
+        if(!T2CONbits.TMR2ON){
+            retrieve_data_ICP10111(ICP_A, ICP_B, ICP_C, ICP_D, &TMP_var, &APM_var);
+            activate_ICP10111();
+            // Activate the timer that prevents reading ICP data too early!
+            T2CONbits.TMR2ON = 1;
+        }
+
+
         // Every state cycle, increase the uptime variable.
         UPT_var = UPT_var + 1;
                 
@@ -212,7 +227,7 @@ int main(void)
 //        printf("Battery ADC:%u\r\nburnwire ADC:%u\r\n", BVO_var, CVO_var);
 //        printf("Co2 contents:%d\r\n", COO_var);
 //        printf("temp %.2f:\r\n", TMP_var);
-//        printf("press %.2f:\r\n", APM_var);
+//        printf("press %.2f:\r\n\n\n", APM_var);
         
         
         // 4. Depending on the current state, act accordingly.
