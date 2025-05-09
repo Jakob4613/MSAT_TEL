@@ -159,6 +159,7 @@ while True:
 
 	# IF during the loop the q button is pressed by the user, exit and store the telemetry log.
 	if keyboard.is_pressed('q'):
+		print("Q is pressed. Exporting Telemetry.")
 		export_telemetry(START_TIMESTAMP, output_path, INFLUX_BUCKET, INFLUX_ORG, INFLUX_TOKEN, INFLUX_URL, INFLUX_MEASUREMENT)
 
 

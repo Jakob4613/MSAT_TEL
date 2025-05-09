@@ -120,6 +120,7 @@ while True:
         serial_connected = False
 
     if keyboard.is_pressed('q'):
+        print("Q is pressed. Exporting Telemetry.")
         export_telemetry(
             START_TIMESTAMP,
             output_path,
