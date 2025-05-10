@@ -1,0 +1,14 @@
+The purple shield uses the following pinout:
+Pin D2 NRF24L01 IRQ
+Pin D9 NRF24L01 CE
+Pin D10 CSN
+Pin D11 MOSI
+Pin D12 MISO
+Pin D13 SCK
+The Pins D10 to D13 is 4wire SPI interface. On the theory those pins can be used to connect another SPI device on the interface, i never test more than one device on the SPI line.
+Pin D2 is IRQ is a Interrupt Request Line to the micro-controller.
+Pin D9 is Chip Enable for the NRF24L01 Module.
+Pins D2 and D9 cannot be used for other devices and sensors.
+
+The original usbant uses the following pinout:
+(8, 10)
