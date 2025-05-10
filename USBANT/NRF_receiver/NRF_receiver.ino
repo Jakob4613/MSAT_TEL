@@ -2,7 +2,7 @@
 #include <nRF24L01.h>                       /* to handle this particular modem driver*/
 #include <RF24.h>                           /* the library which helps us to control the radio modem*/
 
-RF24 radio(10,8);                           /* Creating instance 'radio'  ( CE , CSN )   CE -> D7 | CSN -> D8 */                               
+RF24 radio(9,10);                           /* Creating instance 'radio'  ( CE , CSN )   CE -> D7 | CSN -> D8 */                               
 const byte Address[6] = {0xE7, 0xE7, 0xE7, 0xE7, 0xE7};            /* Address from which data to be received */
 
 struct TelemetryPackage {
