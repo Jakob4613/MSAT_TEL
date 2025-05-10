@@ -93,13 +93,6 @@ int main(void)
     INTERRUPT_GlobalInterruptDisable(); 
     initialize_iopins();
     
-    __delay_ms(1000);
-    
-    
-//    T2CONbits.TMR2ON = 1;
-//    while(true){
-//        printf("%d", T2CONbits.TMR2ON);
-//    }
     
 
     // Check wether the part-ids align with the expected value!
@@ -110,9 +103,9 @@ int main(void)
     else{
         RGS_var = true;
 //        printf("ERROR: Gas sensor shows an invalid device id.\r\n");
-//UART        activate_buzzer(true);
-//UART        __delay_ms(500);
-//UART        activate_buzzer(false);
+//        activate_buzzer(true);
+//        __delay_ms(500);
+//        activate_buzzer(false);
     }
     if(retrieve_partid_ICM20984() == 234){
         RAC_var = false;
@@ -121,9 +114,9 @@ int main(void)
     else{
         RAC_var = true;
 //        printf("ERROR: Accelerometer shows an invalid device id.\r\n");
-//UART        activate_buzzer(true);
-//UART        __delay_ms(500);
-//UART        activate_buzzer(false);
+//        activate_buzzer(true);
+//        __delay_ms(500);
+//        activate_buzzer(false);
     }
     if(retrieve_partid_ICP10111() == 8){
 //        printf("SUCCESS: Barometer shows valid device id.\r\n");
@@ -132,9 +125,9 @@ int main(void)
     else{
         RBR_var = true;
 //        printf("ERROR: Accelerometer shows an invalid device id.\r\n");
-//UART        activate_buzzer(true);
-//UART        __delay_ms(500);
-//UART        activate_buzzer(false);
+//        activate_buzzer(true);
+//        __delay_ms(500);
+//        activate_buzzer(false);
     }
     
     if(retrieve_partid_NRF24L01() == 14){
@@ -144,9 +137,9 @@ int main(void)
     else{
         RTL_var = true;
 //        printf("ERROR: NRF24 has not been detected.\r\n");
-//UART        activate_buzzer(true);
-//UART        __delay_ms(500);
-//UART        activate_buzzer(false);
+//        activate_buzzer(true);
+//        __delay_ms(500);
+//        activate_buzzer(false);
     }
        
     initialize_ENS160();
@@ -166,11 +159,12 @@ int main(void)
         set_reference_pressure(APM_var);
         APR_var = APM_var;
         set_global_state(0);
-//UART        for (int i = 0; i < 5; i++) {
-//UART            activate_buzzer(true);
-//UART            __delay_ms(400);
-//UART            activate_buzzer(false);
-//UART            __delay_ms(400);
+        for (int i = 0; i < 5; i++) {
+//            activate_buzzer(true);
+//            __delay_ms(400);
+//            activate_buzzer(false);
+//            __delay_ms(400);
+        }
 
     }
     
@@ -180,9 +174,9 @@ int main(void)
         NST_var = get_global_state();
         APR_var = get_reference_pressure();
         UPT_var = 0;
-//UART        activate_buzzer(true);
-//UART        __delay_ms(100);
-//UART        activate_buzzer(false);
+//        activate_buzzer(true);
+//        __delay_ms(100);
+//        activate_buzzer(false);
     }
     
     activate_ICP10111();
