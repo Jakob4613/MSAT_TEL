@@ -12,7 +12,7 @@ The core functionality of the NUTS flight computer is measuring the required sen
 
 ## NRF24L01+ 2.4Ghz tranceiver
 
-# Schematics
+# Schematic / Connections
 The schematic and table below indicates all of the connections from the PIC18F16Q20 to its peripherals. 
 
 | **PIC Pin** | **Connection**                           | **Description**                                                                 |
