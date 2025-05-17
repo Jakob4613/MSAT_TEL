@@ -15,7 +15,7 @@ On the 8-pin female headers attached to the top of the shield, an NRF24L01+ incl
 The STL files used for printing the enclosure of the USBANT can be found in the `Housing_STL` folder. It consists of two parts that snap into each other around the Arduino uno, its shield and the tranceiver. Printing it from either PLA or PETG should perform fine. After assembling the complete USBANT, make sure to wrap the USBANT with aluminium shielding tape. This layer of shielding tape should be properly connected to the ground of the Arduino’s USB-A connector. Make sure that no ground-loops can occur by not connecting this shielding to the SMA connector. This protects the sensitive electronics for possible incoming interference.
 
 # Schematics
-| **Arduino UNO Pin** | **NRF24L01+ Pin** |
+| **Arduino Uno Pin** | **NRF24L01+ Pin** |
 |-------------|----------------|
 | D2          | IRQ            |
 | D9          | CE             |
