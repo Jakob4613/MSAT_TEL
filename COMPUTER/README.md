@@ -8,16 +8,16 @@ The core responsibility of the computer code is reading the stream of serial dat
 
 # Requirements
 Although only tested on a Lenovo P51 laptop with python 3.12 installed, the code should be executable on every windows machine, given the appropriate requirements are fulfilled. In short:
- - Download a standalone executable of Grafana online, and place it in the Grafana folder, such that the `grafana.exe` file is located directly under the grafana folder.
+ - Download a standalone executable of Grafana online, and place it in the Grafana folder, such that the `/bin/grafana.exe` file is located under the grafana folder.
  - Download a standalone executable of InfluxDB, and place it in the InfluxDB folder, such that the `influxdb.exe` file is located directly under the InfluxDB folder.
  - Install an appropriate version of Python and install all of the required packages listed in the requirements.txt file.
 
 # Execution
 Connect the USBANT device to a usb port of your computer. This makes sure that the telemetry backend can receive telemetry data transmitted by the satellite. Additionally make sure an appropriate 2.4Ghz antenna is connected to the SMA connector of the USBANT.
-Launch the batch script file named `xxx.bat`. This opens up 3 different command prompt. The first prompt is from the python-backend, and this is responsible for decoding the received json packages from the serial connection and writing them to the InfluxDB database. Another prompt is opened for an InfluxDB server, which is responsible for receiving and storing the telemetry packets. The last prompt runs the Grafana server, which is responsible for hosting web-based dashboards. 
+Launch the batch script file named `STARTUP_TELEMETRY.bat`. This opens up 3 different command prompt. The first prompt is from the python-backend, and this is responsible for decoding the received json packages from the serial connection and writing them to the InfluxDB database. Another prompt is opened for an InfluxDB server, which is responsible for receiving and storing the telemetry packets. The last prompt runs the Grafana server, which is responsible for hosting web-based dashboards. 
 Wait until both the Grafana and InfluxDB software seems to be up and running. This can take up to a minute.
 Use a webbrowser to open up http://localhost:8086 to open the web-interface of InfluxDB. In here, you need to make sure that a bucket called `telemetry` is available. If not, create the bucket.
-In the InfluxDB web-interface, check your credentials, API key, organization name and other credentials that are listed in the `python-backend/XXX.py` file. Edit the credentials in this python file according to the InfluxDB setup.
+In the InfluxDB web-interface, check your credentials, API key, organization name and other credentials that are listed in the `python-backend/usb_influxdb_interface.py` file. Edit the credentials in this python file according to the InfluxDB setup.
 Interact with the command prompt running the python-backend. This prompt lists all of the available COM (serial) ports. If the USBANT is correctly connected it will be listed. Instruct the python-backend about the COM port you want to use by returning `COMX`, where X is the specific COM-port.
 Use a webbrowser to open http://localhost:3000 to open the web-interface of Grafana. After registering/logging in, go to data-sources under the preferences and check if there is an instance of InfluxDB. If this is not the case, create a new instance using the credentials that you have extracted in step 5.
 Open the dashboards section of Grafana, create your dashboards and monitor the telemetry. For this last step it may be beneficial to look up some basic tutorials of Grafana to better understand how it functions.
