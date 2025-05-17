@@ -3,16 +3,16 @@ The core functionality of the USBANT is to receive the 2.4Ghz signal transmitted
 
 # Hardware
 ## Arduino Uno
-The computations executed by the USBANT are performed by an Arduino UNO. It can be bought from XXXXX
+The computations executed by the USBANT are performed by an Arduino UNO. It can be bought from [Tinytronics](https://www.tinytronics.nl/en/development-boards/microcontroller-boards/arduino-compatible/arduino-uno-r3)
 
 ## Arduino Uno NRF24L01+ shield
-Attached to the Arduino uno, and connecting it to the 2.4 Ghz tranceiver is a shield. The gerber files for this shield can be downloaded from XXXXX and it is completed with the appropriate headers and a single 10 uF capacitor.
+Attached to the Arduino uno, and connecting it to the 2.4 Ghz tranceiver is a shield. The gerber files for this shield can be downloaded from [Openhardware](https://www.openhardware.io/view/694/Arduino-UNO-NRF24L01-Shield) and it is completed with the appropriate headers and a single 10 uF capacitor.
 
 ## NRF24L01+ 2.4 Ghz tranceiver
-On the 8-pin female headers attached to the top of the shield, an NRF24L01+ including pa + lna and SMA connector can be plugged in. It can be bought from XXXXX.
+On the 8-pin female headers attached to the top of the shield, an NRF24L01+ including pa + lna and SMA connector can be plugged in. It can be bought from [Tinytronics](https://www.tinytronics.nl/en/communication-and-signals/wireless/rf/modules/nrf24l01-wireless-module-with-pa-and-lna).
 
 ## 3D-printed enclosure
-The STL files used for printing the enclosure of the USBANT can be found in the XXXX folder. It consists of two parts that snap into each other around the Arduino uno, its shield and the tranceiver. Printing it from either PLA or PETG should perform fine. After assembling the complete USBANT, make sure to wrap the USBANT with aluminium shielding tape. This layer of shielding tape should be properly connected to the ground of the Arduino’s USB-A connector. This protects the sensitive electronics for possible incoming interference.
+The STL files used for printing the enclosure of the USBANT can be found in the `Housing_STL` folder. It consists of two parts that snap into each other around the Arduino uno, its shield and the tranceiver. Printing it from either PLA or PETG should perform fine. After assembling the complete USBANT, make sure to wrap the USBANT with aluminium shielding tape. This layer of shielding tape should be properly connected to the ground of the Arduino’s USB-A connector. Make sure that no ground-loops can occur by not connecting this shielding to the SMA connector. This protects the sensitive electronics for possible incoming interference.
 
 # Schematics
 
