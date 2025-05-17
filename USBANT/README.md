@@ -3,7 +3,7 @@ The core functionality of the USBANT is to receive the 2.4Ghz signal transmitted
 
 # Hardware
 ## Arduino Uno
-The computations executed by the USBANT are performed by an Arduino UNO. It can be bought from [Tinytronics](https://www.tinytronics.nl/en/development-boards/microcontroller-boards/arduino-compatible/arduino-uno-r3)
+The computations executed by the USBANT are performed by an Arduino UNO. It can be bought from [Tinytronics](https://www.tinytronics.nl/en/development-boards/microcontroller-boards/arduino-compatible/arduino-uno-r3).
 
 ## Arduino Uno NRF24L01+ shield
 Attached to the Arduino uno, and connecting it to the 2.4 Ghz tranceiver is a shield. The gerber files for this shield can be downloaded from [Openhardware](https://www.openhardware.io/view/694/Arduino-UNO-NRF24L01-Shield) and it is completed with the appropriate headers and a single 10 uF capacitor.
