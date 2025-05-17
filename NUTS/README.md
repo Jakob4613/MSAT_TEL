@@ -34,6 +34,7 @@ The schematic below indicates all of the connections from the PIC18F16Q20 to its
  - PIC pin 18 → VDD, power source for the MCU. Connected to 3.3v
  - PIC pin 19 → CLKIN, pin for connecting an external oscillator
  - PIC pin 20 → CLKOUT, pin for connecting an external oscillator
+ 
 ![alt](./schematics/MCU.png)
 
 # Improvements
