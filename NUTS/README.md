@@ -13,27 +13,30 @@ The core functionality of the NUTS flight computer is measuring the required sen
 ## NRF24L01+ 2.4Ghz tranceiver
 
 # Schematics
-The schematic below indicates all of the connections from the PIC18F16Q20 to its peripherals. 
- - PIC pin 1 → MCLR pin, used for in circuit serial programming (ICSP)
- - PIC pin 2 → CSN pin, chip select pin for SPI communications. Connected to the NRF24L01+ 
- - PIC pin 3 → SDO pin, slave data out pin for SPI communications. Connected to the NRF24L01+
- - PIC pin 4 → V_burn pin, which is connected to the burnwire. Used for sensing the voltage accross the burnwire. Since this voltage is well below 3.3 volt, no voltage divider is required. Current limiting resistor placed in series.
- - PIC pin 5 → BUTTON pin is connected to the configuration button. Pull-up in connected in parallel.
- - PIC pin 6 → BUZZER pin is connected to the buzzer. Writing it high activates the buzzer.
- - PIC pin 7 → BATT_measure pin is connect to the 9v battery source via a voltage divider. Used for sensing the battery voltage.
- - PIC pin 8 → SCK pin, clock pin for the SPI communication. Connected to the NRF24L01+
- - PIC pin 9 → SDI pin, slave data in pin for SPI communication. Connected to the NRF24L01+
- - PIC pin 10 → VDDIO3, power source for the MCU. Connected to 3.3v
- - PIC pin 11 → VDDIO2, power source for the MCU. Connected to 1.8v as this connects to the 1.8v I2C bus. Decided as one of the sensors does not tolerate 3.3v.
- - PIC pin 12 → SCL pin, clock pin for the I2C communication. Connected to the I2C bus to which all the sensors are connected.
- - PIC pin 13 → SDA pin, data pin for the I2C communication. Connected to the I2C bus to which all the sensors are connected.
- - PIC pin 14 → E_burn pin is connected to the burnwire chip. Writing this pin high activates the burnwire.
- - PIC pin 15 → ICSPCLK pin, used for in circuit serial programming (ICSP)
- - PIC pin 16 → ICSPDAT pin, used for in circuit serial programming (ICSP)
- - PIC pin 17 → GND pin.
- - PIC pin 18 → VDD, power source for the MCU. Connected to 3.3v
- - PIC pin 19 → CLKIN, pin for connecting an external oscillator
- - PIC pin 20 → CLKOUT, pin for connecting an external oscillator
+The schematic and table below indicates all of the connections from the PIC18F16Q20 to its peripherals. 
+
+| **PIC Pin** | **Connection**                           | **Description**                                                                 |
+|-------------|-------------------------------------------|---------------------------------------------------------------------------------|
+| Pin 1       | MCLR                                      | Used for In-Circuit Serial Programming (ICSP)                                   |
+| Pin 2       | CSN                                       | Chip Select for SPI (connected to NRF24L01+)                                    |
+| Pin 3       | SDO                                       | Slave Data Out for SPI (connected to NRF24L01+)                                 |
+| Pin 4       | V_burn                                    | Voltage sensing across burnwire (with series current limiting resistor)         |
+| Pin 5       | BUTTON                                    | Connected to configuration button (with parallel pull-up resistor)              |
+| Pin 6       | BUZZER                                    | Connected to buzzer; writing high activates it                                  |
+| Pin 7       | BATT_measure                              | Connected to 9V battery via voltage divider for voltage sensing                 |
+| Pin 8       | SCK                                       | SPI Clock (connected to NRF24L01+)                                              |
+| Pin 9       | SDI                                       | Slave Data In for SPI (connected to NRF24L01+)                                  |
+| Pin 10      | VDDIO3                                    | MCU Power, connected to 3.3V                                                    |
+| Pin 11      | VDDIO2                                    | MCU Power, connected to 1.8V for I2C bus compatibility                          |
+| Pin 12      | SCL                                       | I2C Clock (connected to I2C bus)                                                |
+| Pin 13      | SDA                                       | I2C Data (connected to I2C bus)                                                 |
+| Pin 14      | E_burn                                    | Connected to burnwire chip; writing high activates burnwire                     |
+| Pin 15      | ICSPCLK                                   | Used for In-Circuit Serial Programming (ICSP)                                   |
+| Pin 16      | ICSPDAT                                   | Used for In-Circuit Serial Programming (ICSP)                                   |
+| Pin 17      | GND                                       | Ground                                                                           |
+| Pin 18      | VDD                                       | MCU Power, connected to 3.3V                                                    |
+| Pin 19      | CLKIN                                     | External oscillator input                                                       |
+| Pin 20      | CLKOUT                                    | External oscillator output                                                      |
 
 ![MCU schematic](./schematics/MCU.png)
 
