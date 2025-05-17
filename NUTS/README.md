@@ -34,8 +34,8 @@ The schematic below indicates all of the connections from the PIC18F16Q20 to its
  - PIC pin 18 → VDD, power source for the MCU. Connected to 3.3v
  - PIC pin 19 → CLKIN, pin for connecting an external oscillator
  - PIC pin 20 → CLKOUT, pin for connecting an external oscillator
- 
-![alt](./schematics/MCU.png)
+
+![MCU schematic](./schematics/MCU.png)
 
 # Improvements
  - As of yet, not a lot of research has been put into clock speeds and the effect on the microcontroller. The main benefit of increasing the clock speed is the increase in telemetry sending rate. We have currently chosen a conservative clock speed to ensure MCU stability. An MCU crash at burnwire deployment could majorly influence the functioning of our satellite.
