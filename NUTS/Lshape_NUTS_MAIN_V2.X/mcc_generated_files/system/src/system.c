@@ -45,7 +45,6 @@ void SYSTEM_Initialize(void)
     TMR2_Initialize();
     MVIO_Initialize();
     NVM_Initialize();
-    UART1_Initialize();
     INTERRUPT_Initialize();
 }
 

@@ -12,8 +12,9 @@
 
 // DONT FORGET TO SET THE BARO_TIMER TO THE PROPER AMOUNT OF TIME!
 #define LIFT_THRESHOLD 20 // If the satellite surpasses this value, the sat is able to go into DRP1
-#define DRP1_THRESHOLD 110 //If the satellite drops below this value, the burnwire is capable of triggering
-#define BWA_THRESHOLD 90 // If the satellite surpasses this value, the burnwire is activated
+#define DRP1_THRESHOLD 250 //If the satellite drops below this value, the burnwire is capable of triggering
+#define BWA_BLADES_THRESHOLD 200 // If the satellite surpasses this value, the burnwire is activated
+#define BWA_LEGS_THRESHOLD 50 // If the satellite surpasses this value, the burnwire is activated
 #define TDW_THRESHOLD 10 // If the satellite surpasses this value, the sat goes into touchdown-mode
 
 struct {
@@ -93,6 +94,11 @@ int main(void)
     INTERRUPT_GlobalInterruptDisable(); 
     initialize_iopins();
     
+    __delay_ms(100);
+    
+    activate_brnwr_blades(false);
+    activate_brnwr_legs(false);
+    
     
 
     // Check wether the part-ids align with the expected value!
@@ -102,10 +108,6 @@ int main(void)
     }
     else{
         RGS_var = true;
-//        printf("ERROR: Gas sensor shows an invalid device id.\r\n");
-//        activate_buzzer(true);
-//        __delay_ms(500);
-//        activate_buzzer(false);
     }
     if(retrieve_partid_ICM20984() == 234){
         RAC_var = false;
@@ -114,9 +116,6 @@ int main(void)
     else{
         RAC_var = true;
 //        printf("ERROR: Accelerometer shows an invalid device id.\r\n");
-//        activate_buzzer(true);
-//        __delay_ms(500);
-//        activate_buzzer(false);
     }
     if(retrieve_partid_ICP10111() == 8){
 //        printf("SUCCESS: Barometer shows valid device id.\r\n");
@@ -125,9 +124,6 @@ int main(void)
     else{
         RBR_var = true;
 //        printf("ERROR: Accelerometer shows an invalid device id.\r\n");
-//        activate_buzzer(true);
-//        __delay_ms(500);
-//        activate_buzzer(false);
     }
     
     if(retrieve_partid_NRF24L01() == 14){
@@ -137,9 +133,6 @@ int main(void)
     else{
         RTL_var = true;
 //        printf("ERROR: NRF24 has not been detected.\r\n");
-//        activate_buzzer(true);
-//        __delay_ms(500);
-//        activate_buzzer(false);
     }
        
     initialize_ENS160();
@@ -159,12 +152,6 @@ int main(void)
         set_reference_pressure(APM_var);
         APR_var = APM_var;
         set_global_state(0);
-        for (int i = 0; i < 5; i++) {
-//            activate_buzzer(true);
-//            __delay_ms(400);
-//            activate_buzzer(false);
-//            __delay_ms(400);
-        }
 
     }
     
@@ -174,9 +161,6 @@ int main(void)
         NST_var = get_global_state();
         APR_var = get_reference_pressure();
         UPT_var = 0;
-//        activate_buzzer(true);
-//        __delay_ms(100);
-//        activate_buzzer(false);
     }
     
     activate_ICP10111();
@@ -247,8 +231,8 @@ int main(void)
             // DRP1 state
             case 2:
                 // If the proper condition is met: proceed to the next state.
-                if (HAG_var < BWA_THRESHOLD){                  
-                    activate_brnwr(true); //--------------------------------------------------------------Most important line of code!-------------
+                if (HAG_var < BWA_BLADES_THRESHOLD){                  
+                    activate_brnwr_blades(true); //--------------------------------------------------------------Most important line of code!-------------
                     NST_var = 3;
                     set_global_state(NST_var);
                 }
@@ -258,7 +242,8 @@ int main(void)
             case 3:
                 // If the proper condition is met: proceed to the next state.
                 // In this case check if BWA is properly activated.!
-                if (HAG_var < TDW_THRESHOLD){
+                if (HAG_var < BWA_LEGS_THRESHOLD){
+                    activate_brnwr_legs(true);
                     NST_var = 4;
                     set_global_state(NST_var);
                 }
@@ -275,7 +260,7 @@ int main(void)
                 
             // TDW state
             case 5:
-//UART                activate_buzzer(false);
+                NOP();
                 break;
             
             default:

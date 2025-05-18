@@ -43,7 +43,6 @@
 #include "../system/pins.h"
 #include "../system/mvio.h"
 #include "../nvm/nvm.h"
-#include "../uart/uart1.h"
 #include "../system/interrupt.h"
 #include "../system/clock.h"
 #include "../i2c_host/i2c1.h"

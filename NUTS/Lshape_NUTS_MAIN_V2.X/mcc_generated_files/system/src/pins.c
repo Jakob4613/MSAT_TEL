@@ -99,7 +99,6 @@ void PIN_MANAGER_Initialize(void)
     PPS registers
     */
     SPI1SDIPPS = 0xD; //RB5->SPI1:SDI1;
-    RC7PPS = 0x13;  //RC7->UART1:TX1;
     RC4PPS = 0x1A;  //RC4->SPI1:SDO1;
     I2C1SCLPPS = 0x11;  //RC1->I2C1:SCL1;
     RC1PPS = 0x1C;  //RC1->I2C1:SCL1;

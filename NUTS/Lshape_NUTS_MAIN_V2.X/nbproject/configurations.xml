@@ -33,9 +33,6 @@
           <itemPath>mcc_generated_files/timer/tmr2.h</itemPath>
           <itemPath>mcc_generated_files/timer/tmr2_deprecated.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="uart" displayName="uart" projectFiles="true">
-          <itemPath>mcc_generated_files/uart/uart1.h</itemPath>
-        </logicalFolder>
       </logicalFolder>
       <itemPath>EEPROM_ACCESS.h</itemPath>
       <itemPath>ENS160.h</itemPath>
@@ -89,11 +86,6 @@
         <logicalFolder name="timer" displayName="timer" projectFiles="true">
           <logicalFolder name="src" displayName="src" projectFiles="true">
             <itemPath>mcc_generated_files/timer/src/tmr2.c</itemPath>
-          </logicalFolder>
-        </logicalFolder>
-        <logicalFolder name="uart" displayName="uart" projectFiles="true">
-          <logicalFolder name="src" displayName="src" projectFiles="true">
-            <itemPath>mcc_generated_files/uart/src/uart1.c</itemPath>
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>

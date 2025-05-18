@@ -9,8 +9,8 @@
  * and burnwire measurement are set as analog inputs.
  */
 void initialize_iopins(void){
-    TRISCbits.TRISC7 = 0;      //Buzzer
-    TRISAbits.TRISA2 = 0;      //BW activation
+    TRISCbits.TRISC7 = 0;      //BW legs activ
+    TRISAbits.TRISA2 = 0;      //BW blades activ
     
     // Configure Analog input.
     TRISBbits.TRISB7 = 1;       // Battery measurement
@@ -46,17 +46,16 @@ uint16_t read_brnwr_voltage(void){
 }
 
 /**
- * Function for interfacing with the onboard_buzzer.
- * @param on_or_off boolean value indicating wether to turn the buzzer on or off. 
+ * Function for activating the leg brnwr.
  * true = on, false = off.
  */
-void activate_buzzer(bool on_or_off){
+void activate_brnwr_legs(bool on_or_off){
     LATCbits.LATC7 = on_or_off;
 }
 
 /**
- * Function for activating the burnwire.
+ * Function for activating the burnwire of the blades.
  */
-void activate_brnwr(bool on_or_off){
+void activate_brnwr_blades(bool on_or_off){
     LATAbits.LATA2 = on_or_off;
 }

@@ -50,24 +50,24 @@
 #define PULL_UP_DISABLED     0
 
 // get/set RA2 aliases
-#define BW_ACT_TRIS                 TRISAbits.TRISA2
-#define BW_ACT_LAT                  LATAbits.LATA2
-#define BW_ACT_PORT                 PORTAbits.RA2
-#define BW_ACT_WPU                  WPUAbits.WPUA2
-#define BW_ACT_OD                   ODCONAbits.ODCA2
-#define BW_ACT_ANS                  ANSELAbits.ANSELA2
-#define BW_ACT_SetHigh()            do { LATAbits.LATA2 = 1; } while(0)
-#define BW_ACT_SetLow()             do { LATAbits.LATA2 = 0; } while(0)
-#define BW_ACT_Toggle()             do { LATAbits.LATA2 = ~LATAbits.LATA2; } while(0)
-#define BW_ACT_GetValue()           PORTAbits.RA2
-#define BW_ACT_SetDigitalInput()    do { TRISAbits.TRISA2 = 1; } while(0)
-#define BW_ACT_SetDigitalOutput()   do { TRISAbits.TRISA2 = 0; } while(0)
-#define BW_ACT_SetPullup()          do { WPUAbits.WPUA2 = 1; } while(0)
-#define BW_ACT_ResetPullup()        do { WPUAbits.WPUA2 = 0; } while(0)
-#define BW_ACT_SetPushPull()        do { ODCONAbits.ODCA2 = 0; } while(0)
-#define BW_ACT_SetOpenDrain()       do { ODCONAbits.ODCA2 = 1; } while(0)
-#define BW_ACT_SetAnalogMode()      do { ANSELAbits.ANSELA2 = 1; } while(0)
-#define BW_ACT_SetDigitalMode()     do { ANSELAbits.ANSELA2 = 0; } while(0)
+#define BW_BLADESACT_TRIS                 TRISAbits.TRISA2
+#define BW_BLADESACT_LAT                  LATAbits.LATA2
+#define BW_BLADESACT_PORT                 PORTAbits.RA2
+#define BW_BLADESACT_WPU                  WPUAbits.WPUA2
+#define BW_BLADESACT_OD                   ODCONAbits.ODCA2
+#define BW_BLADESACT_ANS                  ANSELAbits.ANSELA2
+#define BW_BLADESACT_SetHigh()            do { LATAbits.LATA2 = 1; } while(0)
+#define BW_BLADESACT_SetLow()             do { LATAbits.LATA2 = 0; } while(0)
+#define BW_BLADESACT_Toggle()             do { LATAbits.LATA2 = ~LATAbits.LATA2; } while(0)
+#define BW_BLADESACT_GetValue()           PORTAbits.RA2
+#define BW_BLADESACT_SetDigitalInput()    do { TRISAbits.TRISA2 = 1; } while(0)
+#define BW_BLADESACT_SetDigitalOutput()   do { TRISAbits.TRISA2 = 0; } while(0)
+#define BW_BLADESACT_SetPullup()          do { WPUAbits.WPUA2 = 1; } while(0)
+#define BW_BLADESACT_ResetPullup()        do { WPUAbits.WPUA2 = 0; } while(0)
+#define BW_BLADESACT_SetPushPull()        do { ODCONAbits.ODCA2 = 0; } while(0)
+#define BW_BLADESACT_SetOpenDrain()       do { ODCONAbits.ODCA2 = 1; } while(0)
+#define BW_BLADESACT_SetAnalogMode()      do { ANSELAbits.ANSELA2 = 1; } while(0)
+#define BW_BLADESACT_SetDigitalMode()     do { ANSELAbits.ANSELA2 = 0; } while(0)
 
 // get/set RB5 aliases
 #define IO_RB5_TRIS                 TRISBbits.TRISB5
@@ -210,24 +210,24 @@
 #define CFG_IN_SetDigitalMode()     do { ANSELCbits.ANSELC6 = 0; } while(0)
 
 // get/set RC7 aliases
-#define IO_RC7_TRIS                 TRISCbits.TRISC7
-#define IO_RC7_LAT                  LATCbits.LATC7
-#define IO_RC7_PORT                 PORTCbits.RC7
-#define IO_RC7_WPU                  WPUCbits.WPUC7
-#define IO_RC7_OD                   ODCONCbits.ODCC7
-#define IO_RC7_ANS                  ANSELCbits.ANSELC7
-#define IO_RC7_SetHigh()            do { LATCbits.LATC7 = 1; } while(0)
-#define IO_RC7_SetLow()             do { LATCbits.LATC7 = 0; } while(0)
-#define IO_RC7_Toggle()             do { LATCbits.LATC7 = ~LATCbits.LATC7; } while(0)
-#define IO_RC7_GetValue()           PORTCbits.RC7
-#define IO_RC7_SetDigitalInput()    do { TRISCbits.TRISC7 = 1; } while(0)
-#define IO_RC7_SetDigitalOutput()   do { TRISCbits.TRISC7 = 0; } while(0)
-#define IO_RC7_SetPullup()          do { WPUCbits.WPUC7 = 1; } while(0)
-#define IO_RC7_ResetPullup()        do { WPUCbits.WPUC7 = 0; } while(0)
-#define IO_RC7_SetPushPull()        do { ODCONCbits.ODCC7 = 0; } while(0)
-#define IO_RC7_SetOpenDrain()       do { ODCONCbits.ODCC7 = 1; } while(0)
-#define IO_RC7_SetAnalogMode()      do { ANSELCbits.ANSELC7 = 1; } while(0)
-#define IO_RC7_SetDigitalMode()     do { ANSELCbits.ANSELC7 = 0; } while(0)
+#define BW_LEGS_ACT_TRIS                 TRISCbits.TRISC7
+#define BW_LEGS_ACT_LAT                  LATCbits.LATC7
+#define BW_LEGS_ACT_PORT                 PORTCbits.RC7
+#define BW_LEGS_ACT_WPU                  WPUCbits.WPUC7
+#define BW_LEGS_ACT_OD                   ODCONCbits.ODCC7
+#define BW_LEGS_ACT_ANS                  ANSELCbits.ANSELC7
+#define BW_LEGS_ACT_SetHigh()            do { LATCbits.LATC7 = 1; } while(0)
+#define BW_LEGS_ACT_SetLow()             do { LATCbits.LATC7 = 0; } while(0)
+#define BW_LEGS_ACT_Toggle()             do { LATCbits.LATC7 = ~LATCbits.LATC7; } while(0)
+#define BW_LEGS_ACT_GetValue()           PORTCbits.RC7
+#define BW_LEGS_ACT_SetDigitalInput()    do { TRISCbits.TRISC7 = 1; } while(0)
+#define BW_LEGS_ACT_SetDigitalOutput()   do { TRISCbits.TRISC7 = 0; } while(0)
+#define BW_LEGS_ACT_SetPullup()          do { WPUCbits.WPUC7 = 1; } while(0)
+#define BW_LEGS_ACT_ResetPullup()        do { WPUCbits.WPUC7 = 0; } while(0)
+#define BW_LEGS_ACT_SetPushPull()        do { ODCONCbits.ODCC7 = 0; } while(0)
+#define BW_LEGS_ACT_SetOpenDrain()       do { ODCONCbits.ODCC7 = 1; } while(0)
+#define BW_LEGS_ACT_SetAnalogMode()      do { ANSELCbits.ANSELC7 = 1; } while(0)
+#define BW_LEGS_ACT_SetDigitalMode()     do { ANSELCbits.ANSELC7 = 0; } while(0)
 
 /**
  * @ingroup  pinsdriver
