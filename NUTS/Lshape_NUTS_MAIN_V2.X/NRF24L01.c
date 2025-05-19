@@ -27,7 +27,7 @@
                                     // additionally set power up and to PTX.
 #define CONFIG_FEATURE 0b00000001   //Turn on the W_TX_PAYLOAD_NOACK command!
 #define CONFIG_ENAA 0x00            // Disable the auto acknowledgement on all pipes.
-#define CONFIG_CH_REG 0x05          // The frequency is determined by F0 = 2400 + CH_REG [Mhz].
+#define CONFIG_CH_REG 0x28          // hex28 is gelijk aan 40. The frequency is determined by F0 = 2400 + CH_REG [Mhz].
 //#define CONFIG_SETUPAW 0b00000011   // 5 bit channel width
 #define CONFIG_SETUPAW 0b00000001   // 3 bit channel width
 #define CONFIG_RETR_REG 0x00        // disable auto-retransmit
