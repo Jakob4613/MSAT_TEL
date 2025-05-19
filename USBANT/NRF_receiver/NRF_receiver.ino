@@ -2,6 +2,9 @@
 #include <nRF24L01.h>                       /* to handle this particular modem driver*/
 #include <RF24.h>                           /* the library which helps us to control the radio modem*/
 
+//barebones USBANT
+//RF24 radio(8,10);                           /* Creating instance 'radio'  ( CE , CSN )   CE -> D7 | CSN -> D8 */                               
+//Version 2 USBANT aluwrap
 RF24 radio(9,10);                           /* Creating instance 'radio'  ( CE , CSN )   CE -> D7 | CSN -> D8 */                               
 const byte Address[6] = {0xE7, 0xE7, 0xE7, 0xE7, 0xE7};            /* Address from which data to be received */
 
@@ -85,6 +88,14 @@ void printTelemetry(const TelemetryPackage& telemetryData) {
   Serial.print(telemetryData.HAG);
   Serial.print(",\"APR\":");
   Serial.print(telemetryData.APR);
+  Serial.print(",\"NL1\":");
+  Serial.print(telemetryData.NULL_1);
+  Serial.print(",\"NL2\":");
+  Serial.print(telemetryData.NULL_2);
+  Serial.print(",\"NL3\":");
+  Serial.print(telemetryData.NULL_3);
+  Serial.print(",\"NL4\":");
+  Serial.print(telemetryData.NULL_4);
   Serial.println("}");
 }
 
@@ -106,7 +117,7 @@ void setup() {
   radio.setPayloadSize(32);
   radio.setAutoAck(false);
   radio.setAddressWidth(3);
-  radio.setChannel(0x05);
+  radio.setChannel(0x28);
   radio.openReadingPipe(1, Address);        /* Sets the address of receiver from which program will receive the data*/
   radio.startListening();			              /*Setting modem in Receiver mode*/
 

@@ -16,9 +16,9 @@
 
 #define SELECTED_MODE 0x70DF
 
-#define TEMPERATURE 288.15             // K (constant in isothermal assumption)
+#define TEMPERATURE 303.15             // K (constant in isothermal assumption)
 #define GAS_CONSTANT 8.3144598         // J/(mol·K)
-#define GRAVITY 9.7806                // m/s^2
+#define GRAVITY 9.7796                // m/s^2
 #define MOLAR_MASS 0.0289644           // kg/mol
 
 
