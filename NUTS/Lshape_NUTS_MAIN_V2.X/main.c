@@ -96,16 +96,17 @@ int main(void)
     
     __delay_ms(100);
     
-    while(true){
-        activate_brnwr_blades(true);
-        __delay_ms(5000);
-        activate_brnwr_blades(false);
+
+// Burnwire testing sequence
+//    while(true){
+//        activate_brnwr_blades(true);
+//        __delay_ms(5000);
+//        activate_brnwr_blades(false);
         
-        activate_brnwr_legs(true);
-        __delay_ms(5000);
-        activate_brnwr_legs(false);
-        
-    }
+//        activate_brnwr_legs(true);
+//        __delay_ms(5000);
+//        activate_brnwr_legs(false);      
+//    }
     
     
     
