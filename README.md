@@ -16,6 +16,6 @@ The interface between USBANT and the NUTS happens between the two NRF24L01+ 2.4G
  - The power level is set to its maximum.
  - Auto acknowledgement is disabled.
  - Address size is set to 3 bits.
- - Channel is set to 0x05.
+ - Channel is set to 0x28 to align with the optimal frequency of 2440 Mhz of the antennas.
 
 Setting up this configuration requires a lot of attention as the smallest misconfiguration may destroy the complete system.
