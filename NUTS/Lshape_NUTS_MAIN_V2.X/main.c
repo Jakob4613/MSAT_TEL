@@ -11,11 +11,19 @@
 #include "NRF24L01.h"
 
 // DONT FORGET TO SET THE BARO_TIMER TO THE PROPER AMOUNT OF TIME!
-#define LIFT_THRESHOLD 20 // If the satellite surpasses this value, the sat is able to go into DRP1
-#define DRP1_THRESHOLD 250 //If the satellite drops below this value, the burnwire is capable of triggering
-#define BWA_BLADES_THRESHOLD 200 // If the satellite surpasses this value, the burnwire is activated
-#define BWA_LEGS_THRESHOLD 50 // If the satellite surpasses this value, the burnwire is activated
-#define TDW_THRESHOLD 10 // If the satellite surpasses this value, the sat goes into touchdown-mode
+//#define LIFT_THRESHOLD 20 // If the satellite surpasses this value, the sat is able to go into DRP1
+//#define DRP1_THRESHOLD 250 //If the satellite drops below this value, the burnwire is capable of triggering
+//#define BWA_BLADES_THRESHOLD 200 // If the satellite surpasses this value, the burnwire is activated
+//#define BWA_LEGS_THRESHOLD 50 // If the satellite surpasses this value, the burnwire is activated
+//#define TDW_THRESHOLD 10 // If the satellite surpasses this value, the sat goes into touchdown-mode
+
+#define LIFT_THRESHOLD 3 // If the satellite surpasses this value, the sat is able to go into DRP1
+#define DRP1_THRESHOLD 19 //If the satellite drops below this value, the burnwire is capable of triggering
+#define BWA_BLADES_THRESHOLD 12 // If the satellite surpasses this value, the burnwire is activated
+#define BWA_LEGS_THRESHOLD 5 // If the satellite surpasses this value, the burnwire is activated
+#define TDW_THRESHOLD 2 // If the satellite surpasses this value, the sat goes into touchdown-mode
+
+
 
 struct {
     uint8_t COO_L: 8;
@@ -241,6 +249,7 @@ int main(void)
                 // If the proper condition is met: proceed to the next state.
                 // In this case check if BWA is properly activated.!
                 if (HAG_var < BWA_LEGS_THRESHOLD){
+                    activate_brnwr_blades(false);
                     activate_brnwr_legs(true);
                     NST_var = 4;
                     set_global_state(NST_var);
@@ -251,6 +260,7 @@ int main(void)
             case 4:
                 // If the proper condition is met: proceed to the next state.
                 if (HAG_var < TDW_THRESHOLD){
+                    activate_brnwr_legs(false);
                     NST_var = 5;
                     set_global_state(NST_var);
                 }
