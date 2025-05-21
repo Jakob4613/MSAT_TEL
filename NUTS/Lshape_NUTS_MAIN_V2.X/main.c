@@ -94,21 +94,8 @@ int main(void)
     INTERRUPT_GlobalInterruptDisable(); 
     initialize_iopins();
     
-    __delay_ms(100);
-    
-
-// Burnwire testing sequence
-//    while(true){
-//        activate_brnwr_blades(true);
-//        __delay_ms(5000);
-//        activate_brnwr_blades(false);
-        
-//        activate_brnwr_legs(true);
-//        __delay_ms(5000);
-//        activate_brnwr_legs(false);      
-//    }
-    
-    
+    __delay_ms(500);
+     
     
     
 
