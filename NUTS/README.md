@@ -43,7 +43,7 @@ The schematic and table below indicates all of the connections from the PIC18F16
 | Pin 19      | CLKIN                                     | External oscillator input                                                       |
 | Pin 20      | CLKOUT                                    | External oscillator output                                                      |
 
-![MCU schematic](./schematics/MCU.png)
+![MCU schematic](../img/MCU.png)
 
 # Improvements
  - As of yet, not a lot of research has been put into clock speeds and the effect on the microcontroller. The main benefit of increasing the clock speed is the increase in telemetry sending rate. We have currently chosen a conservative clock speed to ensure MCU stability. An MCU crash at burnwire deployment could majorly influence the functioning of our satellite.
