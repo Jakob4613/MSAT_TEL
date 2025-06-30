@@ -1,5 +1,6 @@
 # Functionality
 The core functionality of the NUTS flight computer is measuring the required sensor values (CO2 contents, acceleration, temperature etc.), respectively deploying the autogyro and impact legs at an altitude of 200 and 50m during descent, and transmitting the acquired sensor values to the groundstation.
+![Finite State Machine](../img/flowchart.png)
 
 # Hardware
 ## PIC18F16Q20 Microcontroller
