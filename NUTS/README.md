@@ -6,12 +6,16 @@ The core functionality of the NUTS flight computer is measuring the required sen
 [datasheet](https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/PIC18F06-16Q20-Microcontroller-Data-Sheet-DS40002387.pdf)
 
 ## ICP-10111 Barometer
+[datasheet](https://invensense.tdk.com/wp-content/uploads/2021/06/DS-000177-ICP-10111-v1.3.pdf)
 
 ## ICM-20948 Inertial Measurement Unit
+[datasheet](https://invensense.tdk.com/wp-content/uploads/2016/06/DS-000189-ICM-20948-v1.3.pdf)
 
 ## ENS160 Gas sensor
+[datasheet](https://www.mouser.com/datasheet/2/1081/SC_001224_DS_1_ENS160_Datasheet_Rev_0_95-2258311.pdf)
 
 ## NRF24L01+ 2.4Ghz tranceiver
+[datasheet](https://docs-be.nordicsemi.com/bundle/nRF24L01P_PS_v1.0/raw/resource/enus/nRF24L01P_PS_v1.0.pdf)
 
 # Schematic / Connections
 The schematic and table below indicates all of the connections from the PIC18F16Q20 to its peripherals. 
