@@ -3,6 +3,7 @@ This is the github repository associated with Mulerius Satellites team '25. The 
 
 ## Interfaces
 The following interfaces are present in the complete system. The NUTS pcb measures environmental variables, which are communicated to the USBANT over RF. The USBANT relays the received data to the computer which shows the information on dashboards. The details of these interfaces are highlighted in this readme, as they transcend the readme’s from the subsoftwares.
+![Interface overview](./img/interfaces.png)
 
 ### COMPUTER ↔ USBANT
 The main interface between computer and USBANT is the serial connection. In order to assure proper functionality, make sure that the baud rates, bit parity and other serial settings align. They can be found and set up in `COMPUTER/dependencies/python/usb_influxdb_interface.py` (Computer) and `USBANT/NRF_receiver/NRF_receiver.ino` (USBANT). In the current setup, the baud rate is set to 119200 baud and the other serial settings are left at Arduino’s default. These are 8 data bits, no parity and one stop bit.
