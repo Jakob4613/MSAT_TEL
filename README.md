@@ -3,6 +3,7 @@ This is the github repository associated with Mulerius Satellites team '25. The 
 
 ## Interfaces
 The following interfaces are present in the complete system. The NUTS pcb measures environmental variables, which are communicated to the USBANT over RF. The USBANT relays the received data to the computer which shows the information on dashboards. The details of these interfaces are highlighted in this readme, as they transcend the readme’s from the subsoftwares.
+
 ![Interface overview](./img/interfaces.png)
 
 ### COMPUTER ↔ USBANT
